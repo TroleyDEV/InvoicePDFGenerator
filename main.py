@@ -6,6 +6,7 @@ from fpdf import FPDF
 
 filepaths = glob.glob("invoices/*.xlsx")
 
+# Loop for files
 for filepath in filepaths:
 
     pdf = FPDF(orientation="P", unit="mm", format="A4")
@@ -26,26 +27,22 @@ for filepath in filepaths:
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
 
     # Get column names from Data Frames
-    column_names = df.columns
+    columns = df.columns
 
     # Replace "_" for white spaces in column names
-    formatted_columns = [col.replace("_", " ") for col in column_names]
-
-    product_id, product_name, amount_purchased, price_per_unit, total_price = formatted_columns
+    formatted_columns = [col.replace("_", " ") for col in columns]
 
     pdf.set_font(family="Arial", size=14, style="B")
 
     # Declare width for cells
-    columns_w = [pdf.get_string_width(col) + 6 for col in column_names]
-
-    product_id_w, product_name_w, amount_purchased_w, price_per_unit_w, total_price_w = columns_w
+    columns_w = [pdf.get_string_width(col) + 6 for col in columns]
 
     # Create cell for each column title
-    pdf.cell(w=product_id_w, h=8, txt=product_id.title(), border=1, align="C")
-    pdf.cell(w=product_name_w, h=8, txt=product_name.title(), border=1, align="C")
-    pdf.cell(w=amount_purchased_w, h=8, txt=amount_purchased.title(), border=1, align="C")
-    pdf.cell(w=price_per_unit_w, h=8, txt=price_per_unit.title(), border=1, align="C")
-    pdf.cell(w=0, h=8, txt=total_price.title(), border=1, ln=1, align="C")
+    pdf.cell(w=columns_w[0], h=8, txt=formatted_columns[0].title(), border=1, align="C")
+    pdf.cell(w=columns_w[1], h=8, txt=formatted_columns[1].title(), border=1, align="C")
+    pdf.cell(w=columns_w[2], h=8, txt=formatted_columns[2].title(), border=1, align="C")
+    pdf.cell(w=columns_w[3], h=8, txt=formatted_columns[3].title(), border=1, align="C")
+    pdf.cell(w=0, h=8, txt=formatted_columns[4].title(), border=1, ln=1, align="C")
 
     # Reset total price from previous document
     total = 0
@@ -55,20 +52,20 @@ for filepath in filepaths:
         pdf.set_font(family="Times", size=10)
         pdf.set_text_color(80, 80, 80)
 
-        pdf.cell(w=product_id_w, h=8, txt=str(row["product_id"]), border=1)
-        pdf.cell(w=product_name_w, h=8, txt=str(row["product_name"]), border=1)
-        pdf.cell(w=amount_purchased_w, h=8, txt=str(row["amount_purchased"]), border=1)
-        pdf.cell(w=price_per_unit_w, h=8, txt=str(row["price_per_unit"]), border=1)
+        pdf.cell(w=columns_w[0], h=8, txt=str(row["product_id"]), border=1)
+        pdf.cell(w=columns_w[1], h=8, txt=str(row["product_name"]), border=1)
+        pdf.cell(w=columns_w[2], h=8, txt=str(row["amount_purchased"]), border=1)
+        pdf.cell(w=columns_w[3], h=8, txt=str(row["price_per_unit"]), border=1)
         pdf.cell(w=0, h=8, txt=str(row["total_price"]), border=1, ln=1)
 
         # Calculate total price
         total = total + row["total_price"]
 
     # Create row for total price info
-    pdf.cell(w=product_id_w, h=8, txt="", border=1)
-    pdf.cell(w=product_name_w, h=8, txt="", border=1)
-    pdf.cell(w=amount_purchased_w, h=8, txt="", border=1)
-    pdf.cell(w=price_per_unit_w, h=8, txt="", border=1)
+    pdf.cell(w=columns_w[0], h=8, txt="", border=1)
+    pdf.cell(w=columns_w[1], h=8, txt="", border=1)
+    pdf.cell(w=columns_w[2], h=8, txt="", border=1)
+    pdf.cell(w=columns_w[3], h=8, txt="", border=1)
     pdf.cell(w=0, h=8, txt=str(total), border=1, ln=1)
 
     pdf.output(f"PDFs/{filename}.pdf")
