@@ -28,21 +28,11 @@ for filepath in filepaths:
     # Get column names from Data Frames
     column_names = df.columns
 
-    # Replace "_" for white spaces
-    product_id = column_names[0]
-    product_id = product_id.replace("_", " ")
+    # Replace "_" for white spaces in column names
+    formatted_columns = [col.replace("_", " ") for col in column_names]
 
-    product_name = column_names[1]
-    product_name = product_name.replace("_", " ")
-
-    amount_purchased = column_names[2]
-    amount_purchased = amount_purchased.replace("_", " ")
-
-    price_per_unit = column_names[3]
-    price_per_unit = price_per_unit.replace("_", " ")
-
-    total_price = column_names[4]
-    total_price = total_price.replace("_", " ")
+    # Now you can access the formatted column names directly
+    product_id, product_name, amount_purchased, price_per_unit, total_price = formatted_columns
 
     pdf.set_font(family="Arial", size=14, style="B")
 
@@ -62,6 +52,7 @@ for filepath in filepaths:
     # Reset total price from previous document
     total = 0
 
+    # Loop for creating data tables from Excel data
     for index, row in df.iterrows():
         pdf.set_font(family="Times", size=10)
         pdf.set_text_color(80, 80, 80)
