@@ -68,4 +68,14 @@ for filepath in filepaths:
     pdf.cell(w=columns_w[3], h=8, txt="", border=1)
     pdf.cell(w=0, h=8, txt=str(total), border=1, ln=1)
 
+    pdf.ln(20)
+
+    # Set information of total amount and Company name, logo
+    pdf.set_font(family="Arial", size=16, style="B")
+    pdf.set_text_color(0, 0, 0)
+    pdf.cell(w=0, h=8, txt=f"The total due amount is {total} Euros.", ln=1)
+
+    pdf.cell(w=32, h=8, txt="PythonHow")
+    pdf.image(name="pythonhow.png", w=8, h=8)
+
     pdf.output(f"PDFs/{filename}.pdf")
