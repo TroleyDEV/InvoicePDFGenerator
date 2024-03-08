@@ -31,16 +31,14 @@ for filepath in filepaths:
     # Replace "_" for white spaces in column names
     formatted_columns = [col.replace("_", " ") for col in column_names]
 
-    # Now you can access the formatted column names directly
     product_id, product_name, amount_purchased, price_per_unit, total_price = formatted_columns
 
     pdf.set_font(family="Arial", size=14, style="B")
 
     # Declare width for cells
-    product_id_w = pdf.get_string_width(product_id) + 6
-    product_name_w = pdf.get_string_width(product_name) + 6
-    amount_purchased_w = pdf.get_string_width(amount_purchased) + 6
-    price_per_unit_w = pdf.get_string_width(price_per_unit) + 6
+    columns_w = [pdf.get_string_width(col) + 6 for col in column_names]
+
+    product_id_w, product_name_w, amount_purchased_w, price_per_unit_w, total_price_w = columns_w
 
     # Create cell for each column title
     pdf.cell(w=product_id_w, h=8, txt=product_id.title(), border=1, align="C")
