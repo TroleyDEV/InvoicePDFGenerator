@@ -21,6 +21,7 @@ for filepath in filepaths:
 
     pdf.set_font(family="Arial", size=16, style="B")
     pdf.cell(w=50, h=8, txt=f"Date: {date}", ln=1)
+    pdf.ln()
 
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
 
