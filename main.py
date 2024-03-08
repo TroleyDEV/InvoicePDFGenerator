@@ -30,7 +30,7 @@ for filepath in filepaths:
     columns = df.columns
 
     # Replace "_" for white spaces in column names
-    formatted_columns = [col.replace("_", " ") for col in columns]
+    columns = [col.replace("_", " ") for col in columns]
 
     pdf.set_font(family="Arial", size=14, style="B")
 
@@ -38,18 +38,18 @@ for filepath in filepaths:
     columns_w = [pdf.get_string_width(col) + 6 for col in columns]
 
     # Create cell for each column title
-    pdf.cell(w=columns_w[0], h=8, txt=formatted_columns[0].title(), border=1, align="C")
-    pdf.cell(w=columns_w[1], h=8, txt=formatted_columns[1].title(), border=1, align="C")
-    pdf.cell(w=columns_w[2], h=8, txt=formatted_columns[2].title(), border=1, align="C")
-    pdf.cell(w=columns_w[3], h=8, txt=formatted_columns[3].title(), border=1, align="C")
-    pdf.cell(w=0, h=8, txt=formatted_columns[4].title(), border=1, ln=1, align="C")
+    pdf.cell(w=columns_w[0], h=8, txt=columns[0].title(), border=1, align="C")
+    pdf.cell(w=columns_w[1], h=8, txt=columns[1].title(), border=1, align="C")
+    pdf.cell(w=columns_w[2], h=8, txt=columns[2].title(), border=1, align="C")
+    pdf.cell(w=columns_w[3], h=8, txt=columns[3].title(), border=1, align="C")
+    pdf.cell(w=0, h=8, txt=columns[4].title(), border=1, ln=1, align="C")
 
     # Reset total price from previous document
     total = 0
 
     # Loop for creating data tables from Excel data
     for index, row in df.iterrows():
-        pdf.set_font(family="Times", size=10)
+        pdf.set_font(family="Times", size=9, style="B")
         pdf.set_text_color(80, 80, 80)
 
         pdf.cell(w=columns_w[0], h=8, txt=str(row["product_id"]), border=1)
