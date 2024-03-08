@@ -66,11 +66,11 @@ for filepath in filepaths:
         pdf.set_font(family="Times", size=10)
         pdf.set_text_color(80, 80, 80)
 
-        pdf.cell(w=product_id_w, h=8, txt=f"{row["product_id"]}", border=1)
-        pdf.cell(w=product_name_w, h=8, txt=f"{row["product_name"]}", border=1)
-        pdf.cell(w=amount_purchased_w, h=8, txt=f"{row["amount_purchased"]}", border=1)
-        pdf.cell(w=price_per_unit_w, h=8, txt=f"{row["price_per_unit"]}", border=1)
-        pdf.cell(w=0, h=8, txt=f"{row["total_price"]}", border=1, ln=1)
+        pdf.cell(w=product_id_w, h=8, txt=str(row["product_id"]), border=1)
+        pdf.cell(w=product_name_w, h=8, txt=str(row["product_name"]), border=1)
+        pdf.cell(w=amount_purchased_w, h=8, txt=str(row["amount_purchased"]), border=1)
+        pdf.cell(w=price_per_unit_w, h=8, txt=str(row["price_per_unit"]), border=1)
+        pdf.cell(w=0, h=8, txt=str(row["total_price"]), border=1, ln=1)
 
         # Calculate total price
         total = total + row["total_price"]
@@ -80,6 +80,6 @@ for filepath in filepaths:
     pdf.cell(w=product_name_w, h=8, txt="", border=1)
     pdf.cell(w=amount_purchased_w, h=8, txt="", border=1)
     pdf.cell(w=price_per_unit_w, h=8, txt="", border=1)
-    pdf.cell(w=0, h=8, txt=f"{total}", border=1, ln=1)
+    pdf.cell(w=0, h=8, txt=str(total), border=1, ln=1)
 
     pdf.output(f"PDFs/{filename}.pdf")
